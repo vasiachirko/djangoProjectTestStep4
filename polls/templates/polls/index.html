@@ -1,0 +1,35 @@
+{% extends 'polls/base.html' %}
+
+{% block title %}Questions{% endblock title %}
+
+{% block page_header %}
+    <h3>Questions</h3>
+{% endblock page_header %}
+
+{% block content %}
+    {% if messages %}
+        <ul class="alert alert-dismissible messages fade show">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">
+                    {{ message|safe }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <div class="d-flex justify-content-center">
+    {% if latest_question_list %}
+        <ul>
+            {% for question in latest_question_list %}
+                <div class="border-question">
+                    <li>
+                        <h4 class="position-question"><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></h4>
+                    </li>
+                </div>
+            {% endfor %}
+        </ul>
+        </div>
+    {% else %}
+        <h4 class="border-question">No polls are available.</h4>
+    {% endif %}
+{% endblock content %}

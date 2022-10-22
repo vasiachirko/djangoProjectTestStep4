@@ -1,0 +1,26 @@
+{% extends 'polls/base.html' %}
+
+{% block title %}{{ question.question_text }}{% endblock title %}
+
+{% block page_header %}
+    <h3>Please answer the question in the form below.</h3>
+{% endblock page_header %}
+
+{% block content %}
+    <div class="d-flex justify-content-center">
+        <form action="{% url 'polls:vote' question.id %}" method="post" class="form-control-lg">
+            {% csrf_token %}
+            <fieldset>
+                <legend><h1>{{ question.question_text }}</h1></legend>
+                {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+                {% for choice in question.choice_set.all %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+                        <label class="form-check-label" for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+                    </div>
+                {% endfor %}
+            </fieldset>
+            <button class="button-vote" type="submit">Vote</button>
+        </form>
+    </div>
+{% endblock content %}
