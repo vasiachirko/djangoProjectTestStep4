@@ -10,7 +10,6 @@ def index(request):
     context = {
         'latest_question_list': latest_question_list,
     }
-    messages.success(request, 'Thank you your vote has been counted')
     return render(request, 'polls/index.html', context)
 
 
@@ -40,4 +39,5 @@ def vote(request, question_id):
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
+        messages.success(request, 'Thank you your vote has been counted')
         return HttpResponseRedirect(reverse('polls:index'))
